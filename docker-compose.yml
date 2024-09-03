@@ -1,0 +1,48 @@
+services:
+    # Nginx service
+    nginx:
+        image: nginx:alpine
+        container_name: white-board-nginx
+        ports:
+            - "80:80"
+        volumes:
+            - ./Docker/nginx/conf.d:/etc/nginx/conf.d
+            - .:/var/www/html
+        depends_on:
+            - php
+        networks:
+            - app-network
+
+    # PHP-FPM service
+    php:
+        build:
+            context: .
+            dockerfile: Docker/Dockerfile
+        image: etukenmez/white-board-php:v0.2
+        container_name: white-board-php
+        volumes:
+            - .:/var/www/html
+        networks:
+            - app-network
+
+    # Postgres database service
+    db:
+        image: postgres:latest
+        container_name: white-board-postgres
+        environment:
+            POSTGRES_USER: ${DB_USERNAME:-white_board}
+            POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+            POSTGRES_DB: ${DB_DATABASE:-white_board}
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+        networks:
+            - app-network
+
+# Networks
+networks:
+    app-network:
+        driver: bridge
+
+# Volumes
+volumes:
+    postgres-data:

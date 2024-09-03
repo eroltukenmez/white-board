@@ -1,0 +1,45 @@
+# Exclude node_modules as they will be installed inside the container
+node_modules
+
+# Exclude Laravel's cache and logs
+storage/*
+!storage/app
+!storage/framework
+!storage/logs
+!storage/framework/cache
+!storage/framework/sessions
+!storage/framework/views
+
+# Exclude Laravel's environment file
+.env
+
+# Exclude IDE and editor-specific files
+.vscode
+.idea
+*.sublime-project
+*.sublime-workspace
+
+# Exclude local configuration files
+*.local
+*.env.local
+*.env.*.local
+
+# Exclude Docker-related files and directories that are not needed in the container
+Dockerfile
+docker-compose.yml
+!Docker/
+.git
+.gitignore
+
+# Exclude other unnecessary files
+*.md
+*.log
+*.sql
+*.sqlite
+*.yaml
+*.yml
+*.bak
+*.tmp
+*.swp
+*.swo
+*.DS_Store

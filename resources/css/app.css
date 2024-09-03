@@ -1,0 +1,48 @@
+@import "@vueform/multiselect/themes/tailwind.css";
+@import "nprogress/nprogress.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.multiselect,
+.multiselect.is-disabled {
+    @apply border-gray-300 dark:border-gray-700 dark:bg-gray-900 rounded-md shadow-sm;
+}
+.multiselect-clear {
+    @apply opacity-100
+}
+.multiselect.is-active {
+    @apply ring-1 border-indigo-500 dark:border-indigo-600 ring-indigo-500 dark:ring-indigo-600;
+}
+.multiselect-dropdown {
+    @apply border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm overflow-y-auto;
+}
+
+.multiselect-option.is-disabled {
+    @apply dark:text-gray-500
+}
+.multiselect-option.is-pointed,
+.multiselect-option.is-selected,
+.multiselect-option.is-selected.is-pointed {
+    @apply dark:bg-gray-800 dark:text-gray-300;
+}
+.multiselect-tags-search, .multiselect-search{
+    @apply border-0 focus:ring-0 dark:bg-gray-900 dark:text-gray-300;
+}
+.multiselect-search,.multiselect-no-options,.multiselect-no-results {
+    @apply border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 h-full;
+}
+
+#nprogress .bar {
+    background: #4B5563;
+}
+
+#nprogress .peg {
+    box-shadow: 0 0 10px #4B5563, 0 0 5px #4B5563;
+}
+
+#nprogress .spinner-icon {
+    border-top-color: #4B5563;
+    border-left-color: #4B5563;
+}
