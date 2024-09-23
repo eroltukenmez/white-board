@@ -13,6 +13,10 @@ class ApplicationRepository implements ApplicationRepositoryInterface
     {
         $query = Application::query()->with(['user','location']);
 
+        if (isset($filters['user_id'])) {
+            $query->where('user_id', $filters['user_id']);
+        }
+
         if (isset($filters['search'])) {
             $query->where('description', 'like', '%' . $filters['search'] . '%');
         }
