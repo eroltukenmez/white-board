@@ -5,9 +5,12 @@ services:
         container_name: white-board-nginx
         ports:
             - "80:80"
+            - "443:443"
         volumes:
             - ./Docker/nginx/conf.d:/etc/nginx/conf.d
             - .:/var/www/html
+            - ./Docker/certbot/conf:/etc/letsencrypt
+            - ./Docker/certbot/www:/var/www/certbot
         depends_on:
             - php
         networks:
