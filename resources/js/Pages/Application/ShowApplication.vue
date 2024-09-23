@@ -20,7 +20,7 @@ const props = defineProps<{
 
 const user = usePage().props.auth.user
 
-const application = ref<Application>({})
+const application = ref<Application | null>(null)
 const loader = ref<boolean>(true)
 
 
@@ -29,7 +29,7 @@ const form = useForm({
 })
 
 const getApplicationData = async () => {
-    const { data }  = await axios.get<{data:Application}>(route('application.show',props.application_id))
+    const { data }  = await axios.get<{data:Application}>(route('applications.detail',props.application_id))
     application.value = data.data
     loader.value = false
 }
@@ -70,7 +70,7 @@ onMounted(() => getApplicationData())
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                        <div class="ms-3">
+                        <div class="ms-3" v-if="application">
                             <h3
                                 class="mb-6 text-2xl font-bold text-neutral-700 dark:text-neutral-300">
                                 {{ $trans('Applicant Information') }}
@@ -114,7 +114,7 @@ onMounted(() => getApplicationData())
 
                         <ol class="ml-6 border-s-2 border-blue-100">
                             <!--First item-->
-                            <li v-if="application.source">
+                            <li v-if="application && application.source">
                                 <div class="flex-start md:flex">
                                     <div
                                         class="-ms-6 flex-none h-12 w-12 p-3 items-center justify-center rounded-full bg-blue-100 text-blue-700">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref, watch} from "vue";
+import {onMounted, onUpdated, ref, watch} from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Modal from "@/Components/Modal.vue";
 import Multiselect from "@vueform/multiselect";
@@ -10,6 +10,12 @@ const isAssignmentModalOpen = ref<boolean>(false)
 const department = ref<string>('');
 const user = ref<string>('')
 
+const selectOpened = (select$:any) => {
+    if (select$.noOptions) {
+        select$.resolveOptions();
+    }
+}
+
 const fetchDepartment = async (query:any) => {
     const data = await axios.get(route('departments.data'),{
         params:{query}
@@ -18,11 +24,16 @@ const fetchDepartment = async (query:any) => {
 }
 const fetchUser = async (query:any) => {
     const data = await axios.get(route('departments.data'),{
-        params:{query,department:department.value}
+        params:{query,user:'users'}
     })
 
     return data.data.data
 }
+
+onUpdated(() => {
+    department.value = ''
+    user.value = ''
+})
 
 </script>
 
@@ -42,18 +53,26 @@ const fetchUser = async (query:any) => {
 
             <div>
                 <InputLabel for="department" :value="$trans('Department')" />
-                <Multiselect id="department" v-model="department"
+                <Multiselect id="department" v-model="department" :options="fetchDepartment"
+                             autocomplete="off"
+                             value-prop="id"
+                             label="name"
                              :filter-results="false"
+                             :close-on-select="false"
+                             :resolve-on-load="false"
+                             :infinite="true"
                              :min-chars="2"
-                             :resolve-on-load="true"
                              :limit="10"
+                             :clear-on-search="true"
                              :delay="0"
                              :searchable="true"
-                             :options="fetchDepartment" value-prop="id" label="name" :classes="{}"/>
+                             :classes="{singleLabelText:'dark:text-white'}"
+                             @open="selectOpened"
+                />
             </div>
             <div>
                 <InputLabel for="user" :value="$trans('User')" />
-                <Multiselect id="user" v-model="user" :options="fetchUser" value-prop="id" label="name" />
+                <Multiselect id="user" v-model="user" :options="fetchUser" value-prop="id" label="name" :classes="{singleLabelText:'dark:text-white'}" />
             </div>
 
 

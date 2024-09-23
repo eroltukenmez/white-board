@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('applications/data',[ApplicationController::class,'fetchData'])->name('application.data');
     Route::get('applications/create',[ApplicationController::class,'create'])->name('application.create');
     Route::post('applications/create',[ApplicationController::class,'store'])->name('application.store');
+    Route::get('applications/{application}/detail',[ApplicationController::class,'getApplicationDetail'])->name('applications.detail');
     Route::get('applications/{application}',[ApplicationController::class,'show'])->name('application.show');
 });
 

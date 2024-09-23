@@ -44,14 +44,15 @@ class ApplicationController extends Controller
         return redirect()->route('application.create');
     }
 
+    public function getApplicationDetail(Application $application)
+    {
+        return new ApplicationCollection(
+            $this->applicationService->getApplication($application->id)
+        );
+    }
+
     public function show(Application $application)
     {
-        if (\request()->ajax())
-            return new ApplicationCollection(
-                $this->applicationService->getApplication($application->id)
-            );
-
-
         return Inertia::render('Application/ShowApplication',[
             'application_id' => $application->id
         ]);
