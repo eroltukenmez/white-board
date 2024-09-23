@@ -22,6 +22,8 @@ class ApplicationController extends Controller
     {
         $filters = $request->only(['search', 'sortBy', 'sortDirection']);
 
+        $filters['user_id'] = $request->user()->id;
+
         return ApplicationCollection::collection(
             $this->applicationService->getApplications($filters,$request->input('perPage',10))
         );
